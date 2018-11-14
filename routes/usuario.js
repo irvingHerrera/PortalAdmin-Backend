@@ -13,7 +13,7 @@ app.get('/', (req, res, next) => {
                     return res.status(500).json({
                         ok: false,
                         mensaje: 'Error cargando usuarios',
-                        erros: err
+                        errors: err
                     });
                 }
 
@@ -22,6 +22,39 @@ app.get('/', (req, res, next) => {
                     usuarios: usuarios
                 });
             });
+});
+
+// ==============================
+// Crear un nuevo usuario
+// ==============================
+
+app.post('/', (req, res) => {
+
+
+    var body = req.body;
+
+    var usuario = new Usuario({
+        nombre: body.nombre,
+        email: body.email,
+        password: body.password,
+        img: body.img,
+        role: body.role
+    });
+
+    usuario.save((err, usuarioGuardado) => {
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                mensaje: 'Error al crear usuario',
+                errors: err
+            });
+        }
+
+        res.status(200).json({
+            ok: true,
+            usuario: usuarioGuardado
+        });
+    });
 });
 
 module.exports = app;
