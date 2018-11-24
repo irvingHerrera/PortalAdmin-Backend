@@ -11,27 +11,22 @@ var Hospital = require('../models/hospital');
 // ==============================
 
 app.get('/', (req, res, next) => {
-    /*Usuario.find({}, 'nombre email img role')
+    Hospital.find({}, 'nombre email img role')
         .exec(
-            (err, usuarios) => {
+            (err, hospitales) => {
                 if (err) {
                     return res.status(500).json({
                         ok: false,
-                        mensaje: 'Error cargando usuarios',
+                        mensaje: 'Error cargando hospitales',
                         errors: err
                     });
                 }
 
                 res.status(200).json({
                     ok: true,
-                    usuarios: usuarios
+                    hospitales: hospitales
                 });
-            });*/
-
-    res.status(200).json({
-        ok: true,
-        usuarios: "peticion"
-    });
+            });
 });
 
 module.exports = app;
