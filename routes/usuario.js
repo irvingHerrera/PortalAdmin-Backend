@@ -89,9 +89,6 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
 // ==============================
 
 app.post('/', mdAutenticacion.verificaToken, (req, res) => {
-
-
-
     var body = req.body;
 
     var usuario = new Usuario({
