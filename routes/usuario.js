@@ -2,7 +2,9 @@ var express = require('express');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
-var SEED = require('../config/config').SEED;
+var mdAutenticacion = require('../middlewares/autenticacion');
+
+//var SEED = require('../config/config').SEED;
 
 var app = express();
 var Usuario = require('../models/usuario');
@@ -29,33 +31,13 @@ app.get('/', (req, res, next) => {
             });
 });
 
-// ==============================
-// Verificar token
-// ==============================
 
-app.use('/', (res, req, next) => {
-
-    var token = req.query.token;
-
-    jwt.verify(token, SEED, (err, decoded) => {
-
-        if (err) {
-            return res.status(401).json({
-                ok: false,
-                mensaje: 'Token no incorrecto',
-                errors: err
-            });
-        }
-        next();
-    });
-
-});
 
 // ==============================
 // Actualizar usuario
 // ==============================
 
-app.put('/:id', (req, res) => {
+app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
 
     var id = req.params.id;
     var body = req.body;
@@ -106,7 +88,8 @@ app.put('/:id', (req, res) => {
 // Crear un nuevo usuario
 // ==============================
 
-app.post('/', (req, res) => {
+app.post('/', mdAutenticacion.verificaToken, (req, res) => {
+
 
 
     var body = req.body;
@@ -130,7 +113,8 @@ app.post('/', (req, res) => {
 
         res.status(200).json({
             ok: true,
-            usuario: usuarioGuardado
+            usuario: usuarioGuardado,
+            usuarioToken: req.usuario
         });
     });
 });
@@ -139,7 +123,7 @@ app.post('/', (req, res) => {
 // Borrar un usuario por el id
 // ==============================
 
-app.delete('/:id', (req, res) => {
+app.delete('/:id', mdAutenticacion.verificaToken, (req, res) => {
 
     var id = req.params.id;
 
