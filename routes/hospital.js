@@ -11,7 +11,7 @@ var Hospital = require('../models/hospital');
 // ==============================
 
 app.get('/', (req, res, next) => {
-    Hospital.find({}, 'nombre email img role')
+    Hospital.find({}, 'nombre img')
         .exec(
             (err, hospitales) => {
                 if (err) {
@@ -88,7 +88,6 @@ app.post('/', mdAutenticacion.verificaToken, (req, res) => {
 
     var hospital = new Hospital({
         nombre: body.nombre,
-        img: body.img,
         usuario: req.usuario._id
     });
 
