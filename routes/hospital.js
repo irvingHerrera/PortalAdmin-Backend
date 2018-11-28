@@ -1,9 +1,9 @@
 var express = require('express');
-var jwt = require('jsonwebtoken');
 
 var mdAutenticacion = require('../middlewares/autenticacion');
 
 var app = express();
+
 var Hospital = require('../models/hospital');
 
 // ==============================
@@ -11,7 +11,7 @@ var Hospital = require('../models/hospital');
 // ==============================
 
 app.get('/', (req, res, next) => {
-    Hospital.find({}, 'nombre img')
+    Hospital.find({})
         .exec(
             (err, hospitales) => {
                 if (err) {
@@ -56,8 +56,8 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
             });
         }
 
-
         hospital.nombre = body.nombre;
+        hospital.usuario = req.usuario._id;
 
         hospital.save((err, hospitalGuardado) => {
 
@@ -102,8 +102,7 @@ app.post('/', mdAutenticacion.verificaToken, (req, res) => {
 
         res.status(200).json({
             ok: true,
-            hospital: hospitalGuardado,
-            usuarioToken: req.usuario
+            hospital: hospitalGuardado
         });
     });
 });
