@@ -1,6 +1,6 @@
 var express = require('express');
 var jwt = require('jsonwebtoken');
-
+var t = '';
 var mdAutenticacion = require('../middlewares/autenticacion');
 
 var app = express();
