@@ -57,6 +57,8 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
 
 
         medico.nombre = body.nombre;
+        medico.usuario = req.usuario._id;
+        medico.hospital = body.hospital;
 
         medico.save((err, medicoGuardado) => {
 
@@ -88,7 +90,7 @@ app.post('/', mdAutenticacion.verificaToken, (req, res) => {
     var medico = new Medico({
         nombre: body.nombre,
         usuario: req.usuario._id,
-        hospital: body.hospitalID
+        hospital: body.hospital
     });
 
     medico.save((err, medicoGuardado) => {
