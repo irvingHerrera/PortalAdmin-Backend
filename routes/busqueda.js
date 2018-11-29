@@ -5,6 +5,50 @@ var Hospital = require('../models/hospital');
 var Medico = require('../models/medico');
 var Usuario = require('../models/usuario');
 
+
+// ==========================
+// Busqueda general
+// ==========================
+
+app.get('/coleccion/:tabla/:busqueda', (req, res) => {
+    var tabla = req.params.tabla;
+    var busqueda = req.params.busqueda;
+    var regex = new RegExp(busqueda, 'i');
+
+    var promesa;
+
+    switch (tabla) {
+        case 'usuarios':
+            promesa = buscarUsuario(busqueda, regex);
+            break;
+        case 'hospitals':
+            promesa = buscarHospitales(busqueda, regex);
+            break;
+        case 'medicos':
+            promesa = buscarMedicos(busqueda, regex);
+            break;
+        default:
+            res.status(400).json({
+                ok: false,
+                mensaje: 'Los tipos de busqueda solo son usuarios, medicos y hospitales',
+                error: { menssage: 'Tipo de tabla/coleccion no valido' }
+            });
+            break;
+    }
+
+    promesa.then(data => {
+        res.status(200).json({
+            ok: false,
+            [tabla]: data
+        });
+    });
+
+});
+
+// ==========================
+// Busqueda general
+// ==========================
+
 app.get('/todo/:busqueda', (req, res, next) => {
 
     var busqueda = req.params.busqueda;
