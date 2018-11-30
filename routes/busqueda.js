@@ -28,7 +28,7 @@ app.get('/coleccion/:tabla/:busqueda', (req, res) => {
             promesa = buscarMedicos(busqueda, regex);
             break;
         default:
-            res.status(400).json({
+            return res.status(400).json({
                 ok: false,
                 mensaje: 'Los tipos de busqueda solo son usuarios, medicos y hospitales',
                 error: { menssage: 'Tipo de tabla/coleccion no valido' }
