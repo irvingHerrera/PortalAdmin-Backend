@@ -20,9 +20,7 @@ const client = new OAuth2Client(CLIENT_ID);
 async function verify(token) {
     const ticket = await client.verifyIdToken({
         idToken: token,
-        audience: CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
-        // Or, if multiple clients access the backend:
-        //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+        audience: '683132020559-ocl3c3q2hoqgcfrqrpl6bisp7htg38qg.apps.googleusercontent.com',
     });
     const payload = ticket.getPayload();
     const userid = payload['sub'];
