@@ -21,7 +21,7 @@ app.get('/coleccion/:tabla/:busqueda', (req, res) => {
         case 'usuarios':
             promesa = buscarUsuario(busqueda, regex);
             break;
-        case 'hospitals':
+        case 'hospitales':
             promesa = buscarHospitales(busqueda, regex);
             break;
         case 'medicos':
