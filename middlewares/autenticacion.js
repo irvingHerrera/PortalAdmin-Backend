@@ -49,3 +49,26 @@ exports.verificaAdminRole = function(req, res, next) {
 
     }
 };
+
+// ==============================
+// Verificar ADIMIN o mismo usuario
+// ==============================
+
+exports.verificaAdminRoleMismoUsuario = function(req, res, next) {
+
+    var usuario = req.usuario;
+    var id = req.params.id;
+
+    if (usuario.role === 'ADMIN_ROLE' || usuario._id === id) {
+        next();
+        return;
+    } else {
+
+        return res.status(401).json({
+            ok: false,
+            mensaje: 'Token no incorrecto - No es administrador ni es el mismo usuario',
+            errors: { message: 'No es administrador, no puede hacer eso' }
+        });
+
+    }
+};
