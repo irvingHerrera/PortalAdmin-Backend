@@ -61,5 +61,5 @@ app.use('/', appRoutes);
 
 // Escuchar peticiones
 app.listen(3001, () => {
-    console.log("Express server purto 3001 online");
+    console.log("Express server puerto 3001 online");
 });
